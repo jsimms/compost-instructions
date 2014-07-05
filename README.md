@@ -1,4 +1,4 @@
-Lesson Kit: Compost Monitor and Companion Web App
+Composting Monitor Lesson Kit Instructions
 ======
 
 
@@ -8,7 +8,7 @@ Lesson Kit: Compost Monitor and Companion Web App
   1. What We’re Building  
   2. Materials List
 2. Compost Lesson
-3. Create the Web Application
+3. The Web Application
   1. Ruby
   2. Github and Cloning the Repository
   3. Running the App Locally
@@ -16,7 +16,7 @@ Lesson Kit: Compost Monitor and Companion Web App
   5. Testing Manually  
   6. Deploy to Heroku
   7. Recap
-4. Building the monitor
+4. The Monitor
   1. Getting Started
   2. Prep the Wifi Shield and Sensor
   3. Wire the Circuit
@@ -60,8 +60,8 @@ Or, you can also just purchase an Arduino starter kit that has all the above and
   * Compost Pile near a wifi signal
 
 * Accounts
-  * Github (free) - github.com  
-  * Heroku (free) - heroku.com  
+  * Github (free) - http://www.github.com  
+  * Heroku (free) - http://www.heroku.com  
 
 * Software
   * Arduino IDE - http://arduino.cc/en/Main/Software
@@ -71,17 +71,19 @@ Or, you can also just purchase an Arduino starter kit that has all the above and
 Compost Lesson
 ------
 
-If a lesson has not already be done on composting, consider doing a quick lesson around this 5-minute read: https://medium.com/p/5ebdf1ad31c5
+The idea is that this monitor is built and completed in the context of a composting lesson. Temperature and moisture levels are important components to monitor in a compost pile. By using (and improving upon) this monitor, it shows a way that this could be done remotely.
 
-Create the Web Application
+If you have not completed a composting lesson yet, please read my 5 minute composting lesson: https://medium.com/p/5ebdf1ad31c5
+
+The Web Application
 ------
 
 ### Ruby
-The example code uses the Ruby programming language, and a simple web application framework known as Sinatra.
+The example code uses the [Ruby](http://en.wikipedia.org/wiki/Ruby_(programming_language)) programming language, and a simple web application framework known as [Sinatra](http://en.wikipedia.org/wiki/Sinatra_(software).
 
 Ruby should be installed on your Mac by default, but it may be an old version.  
 
-Open terminal and type “ruby -v” then hit enter:
+Open terminal and type `ruby -v` then hit enter:
 
 We’re going to want a version of Ruby 2.0.0. If you don’t have that, then there’s some work to do.  
 
@@ -205,7 +207,7 @@ Test it out by manually inputting a few values like you did earlier. It should w
 
 3. When the user visits the root directory of the application, the server returns the .erb file that contains the HTML code used that tells the browser how to display the data to the user. That HTML file also uses some CSS to style the page, and some javascript to dynamically load the new data on the page.
 
-Building the monitor device
+The Monitor
 ------
 
 ### Getting Started
