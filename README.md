@@ -4,7 +4,7 @@ Composting Monitor Lesson Kit Instructions
 
 ## Table Of Contents  
 
-1. [Overview][overview]
+1. Overview
   1. What We’re Building  
   2. Materials List
 2. Compost Lesson
@@ -26,7 +26,7 @@ Composting Monitor Lesson Kit Instructions
 5. Improvement and Contributing  
 
 
-[overview]Overview
+Overview
 ------
 
 ### What We’re Building
