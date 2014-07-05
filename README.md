@@ -159,33 +159,148 @@ If Atom is your text editor, type `atom .` into terminal while in the project di
 ###### Where the magic happens
 The guts of this small app lie in `weathervane.rb`, let’s break down each piece of code in here.
 
+````
+require 'rubygems'
+require 'sinatra'
+````
 This tells the application what other libraries are needed to run this part of the program.
 
+````
+get '/' do
+  erb :index
+end
+````
 This tells the application to render the index view when a user visits the root directory URL (http://weathervane.herokuapp.com/). This is where everything is actually displayed to the end user (more on this later).
 
+````
+get '/time' do
+  Time.now.asctime
+end
+````
 This block of code stores the time at the server to be used in the index view.
 
+````
+get '/sensor' do
+  File.open 'temp_data.txt', 'w' do |f|
+    f.write params[:temp]
+  end
+  File.open 'hum_data.txt', 'w' do |f|
+    f.write params[:hum]
+  end
+  "OK, Temp: #{params[:temp]} & Hum: #{params[:hum]}"
+end
+````
 This is where we will send the [HTTP GET](http://www.w3schools.com/tags/ref_httpmethods.asp) request using the Arduino. This code takes the parameters sent to the `/sensor` url (aka the stuff after the ? mark: http://localhost:4567/sensor?temp=100&hum=50) and writes .txt files with those values. The last line is the OK response that gets sent back to the client that sent the request.
 
+````
+get '/sensor/temp' do
+  temp = File.read 'temp_data.txt'
+  temp.to_s
+end
+
+get '/sensor/hum' do
+  hum = File.read 'hum_data.txt'
+  hum.to_s
+end
+````
 These blocks of code read the txt files that are created and makes them a [string](http://en.wikipedia.org/wiki/String_(computer_science)) to be used in the index view.
 
+````
+get '/status' do
+  if (File.exist?('temp_data.txt') && File.exist?('hum_data.txt'))
+    'Both files are here'
+  elsif (File.exist?('temp_data.txt') && !File.exist?('hum_data.txt'))
+    "hum file is missing."
+  elsif (!File.exist?('temp_data.txt') && File.exist?('hum_data.txt'))
+    "temp file is missing"
+  else
+    "Both of the data files are missing"
+  end
+end
+````
 This block of code creates a status page at (http://localhost:4567/status). When the user visits, it checks to see what txt data files are present. Helpful for troubleshooting issues.
 
 ###### What you actually see
 The code that controls what you actually see when you go to (http://localhost:4567/) is determined by a handful of files in the `/public` and `/views` directories.
 
-* `/public/jquery-2.1.1.min.js` -  We don’t actually change anything here. This is the javascript library that we will call from the index.erb page to dynamically refresh the page with new times, temperatures, and humidity values.
-* `/public/style.css` - The [CSS](http://en.wikipedia.org/wiki/Cascading_Style_Sheets) file that controls how the elements on the page look. This is how text is blue, fonts are chosen, ect.
-* `/views/index.erb` - Finally...this is the file that tells the server what content is displayed when the user visits. erb is embedded ruby. Embedded ruby files allow a combination of basic HTML and Ruby. Useful for when you want some dynamic information to be displayed. Let’s break it down a bit more.
+`/public/jquery-2.1.1.min.js` -  We don’t actually change anything here. This is the javascript library that we will call from the index.erb page to dynamically refresh the page with new times, temperatures, and humidity values.
+`/public/style.css` - The [CSS](http://en.wikipedia.org/wiki/Cascading_Style_Sheets) file that controls how the elements on the page look. This is how text is blue, fonts are chosen, ect.
+````
+.data {
+	font-size: 36px;
+	margin: 30px;
+	margin-left: 30px;
+	clear: both;
+}
 
+.dataTitle {
+	float: left;
+	margin-right: 20px;
+}
+
+body {
+	font-family: Helvetica;
+}
+
+h1 {
+  color: blue;
+}
+````
+
+`/views/index.erb` - Finally...this is the file that tells the server what content is displayed when the user visits. erb is embedded ruby. Embedded ruby files allow a combination of basic HTML and Ruby. Useful for when you want some dynamic information to be displayed. Let’s break it down a bit more.
+
+````
+<!DOCTYPE html>
+<html>
+````
 This tells the web browser that it is looking at HTML and starts the document.
 
+````
+  <head>
+    <script src="jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Compost Monitor - aka "weathervane"</title>
+  </head>  
+```
 The [head section](http://www.w3schools.com/html/html_head.asp) is where you tell the browser about important things like the location of the CSS files, javascript files (some people like to put those at the bottom of the page), and other metadata like page title.
 
-This is the start of the body. We have a header (Hi there!), and then we break each reading we take into their own distinct divs with classes, ids, and placeholder content.  
+````
+<body>
+
+    <h1>Hi there!</h1>
+
+    <div class="data">
+      <div class="dataTitle">Time (at server):</div>
+      <div id="timeDisplay">Getting time....</div>
+    </div>
+
+    <div class="data">
+      <div class="dataTitle">Pile Tempurature:</div>
+      <div id="tempDisplay">Getting temperature...</div>
+    </div>
+
+    <div class="data">
+      <div class="dataTitle">Pile Humidity:</div>
+      <div id="humDisplay">Getting humidity...</div>
+    </div>
+````
+This is the bulk of the body. We have a header (Hi there!), and then we break each reading we take into their own distinct divs with classes, ids, and placeholder content.  
 
 We use those divs, classes and ids for both styling reasons, and for replacing the values dynamically using javascript.
 
+````
+  <script type="text/javascript">
+    setInterval(function(){
+      $("#timeDisplay").load("/time");
+      $("#tempDisplay").load("/sensor/temp");
+      $("#humDisplay").load("/sensor/hum");
+    }, 5000);
+  </script>
+
+  </body>
+
+</html>
+````
 This is the bottom of the body, where we declare a short javascript function that checks the values at an interval of 5000 milliseconds and loads them into the page at the declared ids.
 
 Note that the ids line up with the ids used earlier in the `.erb` file, and the urls they check line up with what was written in `weathervane.rb`
