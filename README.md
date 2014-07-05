@@ -30,7 +30,7 @@ Overview
 
 This project is aimed towards middle-school and high-school STEM educators who would like to do a project that combines lessons in ecology and sustainability with computer science and web development.  
 
-In this project, I have provided an overview on composting, and instructions for how to build a monitoring device and a web applicaiton.  
+In this project, I have provided an overview on composting, and instructions for how to build a temperature and humidity monitoring device that communicates with a web application.
 
 Here is a [photo of an example the monitor device](http://jdsimms.com.s3.amazonaws.com/compost/header01.JPG).
 
@@ -696,4 +696,4 @@ Each part of the lesson has their own readme on github with a few ideas to get y
   * See project README
 
 * [Compost Monitor](https://github.com/jsimms/compost_monitor)
-  * See project README 
+  * See project README
