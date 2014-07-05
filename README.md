@@ -81,7 +81,7 @@ Compost Lesson
 
 The idea is that this monitor is built and completed in the context of a composting lesson. Temperature and moisture levels are important components to monitor in a compost pile. By using (and improving upon) this monitor, it shows a way that this could be done remotely.
 
-If you have not completed a composting lesson yet, please read my 5 minute composting lesson: https://medium.com/p/5ebdf1ad31c5
+If you have not completed a composting lesson yet, please read my [5 minute composting lesson](https://medium.com/@jdsimms/quick-composting-lesson-5ebdf1ad31c5).
 
 The Web Application
 ------
@@ -675,9 +675,11 @@ Compile the sketch, upload it to the Arduino, open up the serial port, open up y
 Areas for improvement
 ------
 
-There are lots of areas for improvement. This is why everything is up online in accessible, open-source formats. A great exercise with the class would be to have them improve the project and contribute back. Each part of the lesson has their own readme on github with a few ideas to get your started.
+There are lots of areas for improvement. This is why everything is up online in accessible, open formats. A great exercise with the class would be to have them improve the project and contribute back.
 
-* Documentation and Instructions
+Each part of the lesson has their own readme on github with a few ideas to get your started. Feel free to contribute. I'd love it. For the composting lesson on medium, just comment on the article or tweet at me to discuss improvement ideas: [@jdsimms](https://twitter.com/jdsimms)
+
+* [Documentation and Instructions](https://github.com/jsimms/compost-instructions)
   * Fixing typos and bad images (I haven’t proofread anything yet…)
   * Other improvements for clarity
   * Troubleshooting tips
@@ -685,20 +687,13 @@ There are lots of areas for improvement. This is why everything is up online in 
   * Calling out similarities in Ruby and C
   * Better connecting the composting problem to future improvement ideas
 
-* Lesson Plan
-  * Fixing typos and bad images (I haven’t proofread anything yet…)
+* [5 Minute Compost Lesson](https://medium.com/@jdsimms/quick-composting-lesson-5ebdf1ad31c5)
+  * Calling out typos or bad information
   * Other improvements for clarity
   * Vermicomposting Section
 
-* Weathervane
-  * Be able to identify unique devices
-  * Store data into a database instead of creating txt files
-  * Create visual charts to show temperature and humidity over time
-  * Send email or SMS alerts when a pile is cold
+* [Weathervane](https://github.com/jsimms/weathervane)
+  * See project README
 
-* Compost Monitor
-  * A power source that is not your computer
-  * A sensor the can be submerged longer than an hour
-  * Alternative ways besides Wifi network to send data  
-  * Design a case for the circuit
-  * Find and use cheaper materials  
+* [Compost Monitor](https://github.com/jsimms/compost_monitor)
+  * See project README 
