@@ -461,42 +461,194 @@ void setup(void)
 ````
 Here we start the setup function, and set the baud rate we will use to communicate with our serial. We also print to the serial to let us know things are starting up.
 
+````
+  // Initialise the CC3000
+  Serial.println(F("\nInitialising the CC3000..."));
+  if (!cc3000.begin())
+  {
+    Serial.println(F("Unable to initialise the CC3000! Check your wiring?"));
+    while(1);
+  }
+````
 Here we startup the actual CC3000 we have connected to the arduino.
 
+````
+  // Delete old connection data
+  Serial.println(F("Deleting old connection profiles..."));
+  if (!cc3000.deleteProfiles()) {
+    Serial.println(F("Failed!"));
+    while(1);
+  }
+````
 We delete the old connection data that may be stored, otherwise things might error on us. Notice the deleteProfiles function. That’s a function we get to use because we imported the cc3000 library earlier. It saves us from writing it ourselves. We will do that a lot in this sketch. That’s why libraries are important and useful.
 
+````
+  // Connect to Wifi
+  Serial.print(F("Attempting to connect to ")); Serial.print(WIFI_SSID); Serial.println(F("..."));
+
+  if (!cc3000.connectToAP(WIFI_SSID, WIFI_PASS, WIFI_SECURITY)) {
+    Serial.println(F("Failed!"));
+    while(1);
+  }
+
+  Serial.print(F("Connected to ")); Serial.print(WIFI_SSID); Serial.println(F("..."));
+````
 Here we connect to the wifi using the variables we declared at the top of the sketch.
 
+````
+  // Wait for DHCP to finish
+  Serial.println(F("Request DHCP..."));
+  while (!cc3000.checkDHCP())
+  {
+    delay(100); // ToDo: Insert a DHCP timeout!
+  }
+````
 Candidly, I don’t fully grasp DHCP. Essentially I believe this is an important step in establishing continued communication with the Wifi router. :)
 
+````
+  // Show the connection details
+  while (! displayConnectionDetails()) {
+    delay(1000);
+  }
+
+ }
+````
 Once we’re connected, we call a function called displayConnectionDetails() that prints out information to the serial, and close the setup function.
 
 ###### The loop function.
 We’ve successfully setup our connection with the wifi router. Now it’s time to start measuring with the sensor and sending that data to the our web application.
 
+````
+void loop(void)
+{
+  // create variables, get data from the sensor
+  float t_f = sht10.readTemperatureF();
+  float h = sht10.readHumidity();
+
+  // transform data to a string
+  String temperature = String((int) t_f);
+  String humidity = String((int) h);
+
+  // print data to serial port
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print(" F /");
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print("%");
+  Serial.println("");
+````
 Once we start the loop function, we immediately read the temperature and humidity with the SHT-10 and assign that data to variables. We then transform that data into string data-type so we can use it in our request later. Finally, we just print it to the serial so we can see that it happened.
 
+````
+  // Create the request.
+  String request = "GET /sensor?temp=" + temperature + "&hum=" + humidity + " HTTP/1.1\r\n";
+  // Print and Send the request
+  Serial.println("About to send: ");
+  Serial.print(request);
+  Serial.print(F("Host: "));
+  Serial.print(HOST);
+  Serial.print(F("\r\n"));
+  Serial.print(F("User-Agent: Compost Monitor/1.0\r\n"));
+  Serial.println();  
+  send_request(request);
+````
 This takes the temperature and humidity variables, and uses them to create a string object called “request”. We then print out what the full HTTP GET request will look like to the serial, and finally we call the send_request() function with our request string as a parameter.
 
 A lot happens in that function, so we will examine it a bit more below. But for now, assume it all worked well.
 
+````
+  // include at least a 3.6 second delay between pairs of temperature & humidity measurements.
+  delay(4000);
+
+}
+````
 Having sent the request, we wait four seconds before we do it all over again.
 
 ###### Other Functions
 You noticed that we called a lot of functions through that sketch. Some were provided by the libraries that were imported. A couple were not. Here is a quick breakdown of the two functions we have in our sketch besides the setup and loop functions.
 
 *displayConnectionDetails()*
+````
+bool displayConnectionDetails(void)
+{
+  uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
+
+  if(!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
+  {
+    Serial.println(F("Unable to retrieve the IP Address!"));
+    return false;
+  }
+  else
+  {
+    Serial.println("Connection info...");
+    Serial.print(F("\nIP Addr: ")); cc3000.printIPdotsRev(ipAddress);
+    Serial.print(F("\nNetmask: ")); cc3000.printIPdotsRev(netmask);
+    Serial.print(F("\nGateway: ")); cc3000.printIPdotsRev(gateway);
+    Serial.print(F("\nDHCPsrv: ")); cc3000.printIPdotsRev(dhcpserv);
+    Serial.print(F("\nDNSserv: ")); cc3000.printIPdotsRev(dnsserv);
+    Serial.println("\n");
+    return true;
+  }
+}
+````
 This function prints out the connection details to the Wifi network. It’s not vital to the sketch working, but it is nice information to know if you wanted to know it.
 
 *send_request()*
 This is the function that ties the sensor to the web app. This is where we send the GET request to our web server.
+````
+void send_request (String request)
+{
 
+  ip = 0;
+  // Try looking up the website's IP address
+  Serial.print(HOST); Serial.print(F(" -> "));
+  while (ip == 0) {
+    if (! cc3000.getHostByName(HOST, &ip)) {
+      Serial.println(F("Couldn't resolve!"));
+    }
+    delay(500);
+  }
+
+  cc3000.printIPdotsRev(ip);
+````  
 Here we establish that a parameter to the function is a string. We happen to call it request.
 
-Before doing anything with the request string, the CC3000 looks up the IP address of our website. Once it has connected and retrieved the ip, it stores it in a variable called ip, and then prints out that information to the serial port by calling the printIPdotsRev() function.
+Before doing anything with the request string, the CC3000 looks up the IP address of our website. Once it has connected and retrieved the ip, it stores it in a variable called ip, and then prints out that information to the serial port by calling the `printIPdotsRev()` function.
 
+````
+  Adafruit_CC3000_Client www = cc3000.connectTCP(ip, 80);
+  if (www.connected()) {
+    www.print(request);
+    www.print(F("Host: "));
+    www.print(HOST);
+    www.print(F("\r\n"));
+    www.print(F("User-Agent: Compost Monitor/1.0\r\n"));
+    www.print(F("\r\n"));
+    www.println();
+  } else {
+    Serial.println(F("Connection failed"));
+    return;
+  }
+
+  Serial.println(F("-------------------------------------"));
+````
 Here it is, here’s where we actually connect to our application server and send the request. We use the CC3000 library to create a web client that connects to our application server using the IP address we just looked up and port 80. Once we are connected we print out the full request. This matches the sample request we printed to the serial earlier.
 
+````
+  /* Read data until either the connection is closed, or the idle timeout is reached. */
+  unsigned long lastRead = millis();
+  while (www.connected() && (millis() - lastRead < IDLE_TIMEOUT_MS)) {
+    while (www.available()) {
+      char c = www.read();
+      Serial.print(c);
+      lastRead = millis();
+    }
+  }
+  www.close();
+  Serial.println(F("-------------------------------------"));  
+}
+````
 Finally, we read the response, and close the connection until we come back around in the loop function and do it all over again.
 
 ### Upload  
