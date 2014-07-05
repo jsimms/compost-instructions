@@ -1,6 +1,8 @@
 Composting Monitor Lesson Kit Instructions
 ======
 
+These are the master instructions for going through the Compost and Computer Science Lesson Kit I posted on [instructables](http://www.instructables.com/id/Compost-and-Computer-Science-Lesson-Kit/). 
+
 1. Overview
   1. What We're Doing  
   2. Materials List
