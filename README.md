@@ -79,7 +79,7 @@ The Web Application
 ------
 
 ### Ruby
-The example code uses the [Ruby](http://en.wikipedia.org/wiki/Ruby_(programming_language)) programming language, and a simple web application framework known as [Sinatra](http://en.wikipedia.org/wiki/Sinatra_(software).
+The example code uses the [Ruby](http://en.wikipedia.org/wiki/Ruby_(programming_language)) programming language, and a simple web application framework known as [Sinatra](http://en.wikipedia.org/wiki/Sinatra_(software)).
 
 Ruby should be installed on your Mac by default, but it may be an old version.  
 
