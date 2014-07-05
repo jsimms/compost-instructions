@@ -1,11 +1,10 @@
 Composting Monitor Lesson Kit Instructions
 ======
 
-
-## Table Of Contents  
+<img src="https://jdsimms.com.s3.amazonaws.com/compost/header01.JPG" width=300>
 
 1. Overview
-  1. What We’re Building  
+  1. What We're Doing  
   2. Materials List
 2. Compost Lesson
 3. The Web Application
@@ -29,10 +28,10 @@ Composting Monitor Lesson Kit Instructions
 Overview
 ------
 
-### What We’re Building
-This is a project aimed towards middle-school and high-school science educators who would like to do a project that combines lessons in ecology, sustainability, computer science, and web development.  
+### What We’re Doing
+This project is aimed towards middle-school and high-school STEM educators who would like to do a project that combines lessons in ecology and sustainability with computer science and web development.  
 
-In this project, students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to a web application that displays a webpage that students can visit from their phone or computer. However, there’s no reason this can’t just be a generic exercise in measuring temperature and water moisture using some computer software.
+In this project, I have provided an overview on composting, and  students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to a web application that displays a webpage that students can visit from their phone or computer. However, there’s no reason this can’t just be a generic exercise in measuring temperature and water moisture using some computer software.
 
 The lesson leverages the Ruby programming language, Arduino and the Github and Heroku services.Therefore the instructions assume that the educator has at least a little bit of familiarity with the Ruby programming language, Arduino, and using the command line (Terminal) program for the OSX operating system, or at least be willing to read and Google a bit while you learn some basics.  
 
@@ -92,7 +91,7 @@ We’re going to want a version of Ruby 2.0.0. If you don’t have that, then th
 
 As the program downloads terminal will print out the progress. If any errors happen, the best way to fix them is to just google the error message. Someone has likely had the same issue and posted a way to fix it.
 
-Once the correct ruby version is installed, `cd` to the folder that will encase all of the projects. [This is a good article](http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/) for a quick lesson on `cd` and `ls`, two handy terminal commands).
+Once the correct ruby version is installed, `cd` to the folder that will encase all of the projects. [This is a good article](http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/) for a quick lesson on `cd` and `ls`, two handy terminal commands.
 
 For example you might have one folder called “projects” that encases each individual’s project, like so:
 
@@ -104,7 +103,7 @@ Once you have a good feel for the basics `git add`, `git commit`, `git push`, `g
 
 Go to this project: https://github.com/jsimms/weathervane
 
-Copy the SSH Clone URL: git@github.com:jsimms/weathervane.git
+Copy the SSH Clone path: `git@github.com:jsimms/weathervane.git`
 
 Double check that you are still in your projects folder on the command line, and enter:
 `git clone git@github.com:jsimms/weathervane.git`
@@ -126,7 +125,8 @@ This should print out a response that let’s you know Sintra is up and running 
 
 So, go there in your browser, and you should see something like this:
 
-If you don’t, check a few things:  
+If you don’t, check a few things:
+
 1. Make sure that you started Sintra
 2. Make sure that you are in the right project directory
 3. Make sure that you didn’t accidentally delete the weathervane.rb file after cloning.
@@ -339,7 +339,7 @@ There are lots of areas for improvement. This is why everything is up online in 
   * Troubleshooting tips
   * Lesson Questions
   * Calling out similarities in Ruby and C
-  * Better connecting the composting problem to future improvement ideas   
+  * Better connecting the composting problem to future improvement ideas
 
 * Lesson Plan
   * Fixing typos and bad images (I haven’t proofread anything yet…)
