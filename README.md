@@ -31,9 +31,15 @@ Overview
 ### What We’re Doing
 This project is aimed towards middle-school and high-school STEM educators who would like to do a project that combines lessons in ecology and sustainability with computer science and web development.  
 
-In this project, I have provided an overview on composting, and  students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to a web application that displays a webpage that students can visit from their phone or computer. However, there’s no reason this can’t just be a generic exercise in measuring temperature and water moisture using some computer software.
+In this project, I have provided an overview on composting, and instructions for how to build a monitoring device and a web applicaiton.  
 
-The lesson leverages the Ruby programming language, Arduino and the Github and Heroku services.Therefore the instructions assume that the educator has at least a little bit of familiarity with the Ruby programming language, Arduino, and using the command line (Terminal) program for the OSX operating system, or at least be willing to read and Google a bit while you learn some basics.  
+Students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to the web application that displays a webpage  students can visit from their phone or computer.
+
+There’s no reason this device can’t just be a generic exercise in measuring temperature and water moisture using some computer software if you can't find a compost pile.
+
+The lesson leverages the Ruby programming language, Arduino and the Github and Heroku services. Therefore the instructions assume that the educator has at least a little bit of familiarity with the Ruby programming language, Arduino, and using the command line (Terminal) program for the OSX operating system, or at least be willing to read and Google a bit while you learn some basics.  
+
+Everything, including these instructions are purposely on Github. Please, feel free to clone, contribute, and otherwise make this lesson better for everyone.
 
 ### Materials List
 Each circuit contains parts that add up to a cost of approximately $130 before shipping. Add a little more if you need to acquire a soldering iron (or a computer). The Github and Heroku accounts that are needed can utilize their free service.
@@ -82,14 +88,12 @@ The example code uses the [Ruby](http://en.wikipedia.org/wiki/Ruby_(programming_
 
 Ruby should be installed on your Mac by default, but it may be an old version.  
 
-Open terminal and type `ruby -v` then hit enter.
-
-We’re going to want a version of Ruby 2.0.0. If you don’t have that, then there’s some work to do.  
+Open terminal and type `ruby -v` then hit enter. Terminal will print out your ruby version. We’re going to want a version of Ruby 2.0.0. If you don’t have that, then there’s some work to do.  
 
 [RVM](http://rvm.io/) is a good way to get new versions of ruby. To install RVM and the proper ruby, give Terminal this command:
 `\curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0`
 
-As the program downloads terminal will print out the progress. If any errors happen, the best way to fix them is to just google the error message. Someone has likely had the same issue and posted a way to fix it.
+Terminal will start to download everything you need and print the progress. If any errors happen, the best way to fix them is to just google the error message. Someone has likely had the same issue and posted a way to fix it.
 
 Once the correct ruby version is installed, `cd` to the folder that will encase all of the projects. [This is a good article](http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/) for a quick lesson on `cd` and `ls`, two handy terminal commands.
 
@@ -122,6 +126,12 @@ So, `cd` into the cloned project folder and type this command into Terminal:
 `ruby weathervane.rb`
 
 This should print out a response that let’s you know Sintra is up and running on localhost on port 4567.
+````
+[2014-07-05 12:21:52] INFO  WEBrick 1.3.1
+[2014-07-05 12:21:52] INFO  ruby 2.0.0 (2014-05-08) [x86_64-darwin13.1.0]
+== Sinatra/1.4.5 has taken the stage on 4567 for development with backup from WEBrick
+[2014-07-05 12:21:52] INFO  WEBrick::HTTPServer#start: pid=10979 port=4567
+````
 
 So, go there in your browser, and you should see something like this:
 
