@@ -385,22 +385,80 @@ Wire up the CC3000 to complete the circuit, and the rats nest of wires:
 Now it is time to get back into software. Download (or clone) the sketch and put it into your sketchbook: https://github.com/jsimms/compost_monitor
 
 Unlike the Ruby app, there will be a few variables you need to change in this sketch in order to make it work. Crack open the sketch, and replace the WIFI_SSID, WIFI_PASS, and HOST constants with your wifi network name, password, and your heroku app URL.  
+````
+// Provide Your Wifi Network Information
+const char* WIFI_SSID = "yourWifi"; // must be less than 32 characters
+const char* WIFI_PASS = "yourWifiPass";
+````
+
+````
+// Server settings and info (where you want to send requests)
+#define HOST      "weathervane.herokuapp.com"
+````
 
 With those three changes, everything should work. Before we compile and upload let’s run through each section of the sketch so you know what the software is doing. The Arduino language is based on C, which is an object oriented language. Ruby is also an object oriented language. Although they are very different in syntax - you’ll see some similar concepts. Namely, libraries, variables, functions (methods in Ruby).
 
 ###### Importing Libraries and Setting up Global Variables
+````
+// Include required libraries
+#include <Adafruit_CC3000.h>
+#include <Adafruit_CC3000_Server.h>
+#include <ccspi.h>
+#include <string.h>
+#include <SPI.h>
+#include <SHT1x.h>
+#include "utility/debug.h"
+````
+This imports all the libraries needed to run the sketch.
 
-Make sure you import all the libraries needed to run the sketch.
-
+````
+// define CC3000 pins
+const int ADAFRUIT_CC3000_IRQ  =  3;   // IRQ Must be on an interrupt pin!
+const int ADAFRUIT_CC3000_VBAT =  5;   // Can be any pin
+const int ADAFRUIT_CC3000_CS   =  10;  // Can be any pin
+//Create the CC3000 instance (The SPI library sets remaining pins, for the uno: SCK = 13, MISO = 12, MOSI = 11)
+Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ, ADAFRUIT_CC3000_VBAT,
+                                       SPI_CLOCK_DIVIDER);
+````
 This tells the Arduino what pins the CC3000 is connected to, and then it initializes the CC3000 object in the sketch.
 
+````
+// define sht10 pins
+const int DATA_PIN  = 6;  // Blue wire!
+const int CLOCK_PIN = 7;  // Yellow wire!
+
+//Creates the sht10 instnace
+SHT1x sht10 (DATA_PIN, CLOCK_PIN);
+````
 Then, do the same with the SHT-10. Tell the Arduino what pins it is connected to and then initialize the SHT-10 object.
 
+````
+// Provide Your Wifi Network Information
+const char* WIFI_SSID = "yourWifi"; // must be less than 32 characters
+const char* WIFI_PASS = "yourWifiPass";
+// Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2, and I guess it is an int
+const int WIFI_SECURITY =  WLAN_SEC_WPA2;
+````
 Here we provide our Wifi information. The name, the password, and what type of security.
 
+````
+#define IDLE_TIMEOUT_MS  3000      // Amount of time to wait (in milliseconds) with no data
+                                   // received before closing the connection.  If you know the server
+                                   // you're accessing is quick to respond, you can reduce this value.
+
+// Server settings and info (where you want to send requests)
+#define HOST      "weathervane.herokuapp.com"
+uint32_t ip;
+````
 Next, we create an Idle timeout variable to use to determine if our server is not responding. We also create a HOST variable since we reference our heroku app several times in the code. An empty ip variable is created so we can store that information later on in the sketch.
 
 ###### The Setup Function
+````
+void setup(void)
+{
+  Serial.begin(115200);
+  Serial.println("If you start me up...");
+````
 Here we start the setup function, and set the baud rate we will use to communicate with our serial. We also print to the serial to let us know things are starting up.
 
 Here we startup the actual CC3000 we have connected to the arduino.
