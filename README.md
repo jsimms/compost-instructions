@@ -83,40 +83,44 @@ The example code uses the [Ruby](http://en.wikipedia.org/wiki/Ruby_(programming_
 
 Ruby should be installed on your Mac by default, but it may be an old version.  
 
-Open terminal and type `ruby -v` then hit enter:
+Open terminal and type `ruby -v` then hit enter.
 
 We’re going to want a version of Ruby 2.0.0. If you don’t have that, then there’s some work to do.  
 
-RVM is a good way to get new versions of ruby. To install RVM and the proper ruby, give Terminal this command: \curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0
+[RVM](http://rvm.io/) is a good way to get new versions of ruby. To install RVM and the proper ruby, give Terminal this command:
+`\curl -sSL https://get.rvm.io | bash -s stable --ruby=2.0.0`
 
 As the program downloads terminal will print out the progress. If any errors happen, the best way to fix them is to just google the error message. Someone has likely had the same issue and posted a way to fix it.
 
-Once the correct ruby version is installed, ‘cd’ to the folder that will encase all of the projects (This is a good article for a quick lesson on ‘cd’ and ‘ls’, two handy commands). For example you might have one folder called “projects” that encases each individual’s project, like so:
+Once the correct ruby version is installed, `cd` to the folder that will encase all of the projects. [This is a good article](http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/) for a quick lesson on `cd` and `ls`, two handy terminal commands).
+
+For example you might have one folder called “projects” that encases each individual’s project, like so:
 
 Now it is time to clone the project from Github.
 
 ### Github and Cloning the Repository
-It is a good idea to use the version control software git to keep track of changes to the project. If you have not yet, sign up for a free Github account, and go through all their getting started steps. Once you have a good feel for the basics “git add”, “git commit”, “git push”, “git clone”, ect.
+It is a good idea to use the [version control](http://en.wikipedia.org/wiki/Version_control) software git to keep track of changes to the project. If you have not yet, sign up for a free Github account, and go through all their getting started steps.
+Once you have a good feel for the basics `git add`, `git commit`, `git push`, `git clone`, ect.
 
 Go to this project: https://github.com/jsimms/weathervane
 
-Copy the SSH Clone URL:
+Copy the SSH Clone URL: git@github.com:jsimms/weathervane.git
 
 Double check that you are still in your projects folder on the command line, and enter:
-git clone git@github.com:jsimms/weathervane.git
+`git clone git@github.com:jsimms/weathervane.git`
 
 This clones the project into the directory:
 
-Change the name of the folder to whatever you want, but do change it. You could copy and paste that for each kid, but I think it is better to have the kids do a little typing on the command line so they can understand there’s more than one way to operate the computer.
+Change the name of the folder to whatever you want, but do change it to save some confustion. You could copy and paste that for each kid, but I think it is better to have the kids do a little typing on the command line so they can understand there’s more than one way to operate the computer.
 
 ### Running the App Locally
 Let’s run the app on localhost - aka, our computer.
 
-The app uses Sinatra, which is a framework that takes care of a lot of things so you don’t have to worry about them. Between Sintra, and the code, there should be very little you need to do in order to make the app work. It just should, once you get the server running.
+The app uses [Sinatra](http://www.sinatrarb.com/), which is a framework that takes care of a lot of things so you don’t have to worry about them. Between Sintra, and the code, there should be very little you need to do in order to make the app work. It just should, once you get the server running.
 
-So, ‘cd’ into the cloned project folder and type this command into Terminal:
+So, `cd` into the cloned project folder and type this command into Terminal:
 
-ruby weathervane.rb
+`ruby weathervane.rb`
 
 This should print out a response that let’s you know Sintra is up and running on localhost on port 4567.
 
@@ -130,20 +134,20 @@ If you don’t, check a few things:
 ### The Code  
 Even though ‘it just works,’ this is a lesson, so let’s do a quick breakdown of how the app works so kids can have a basic understanding of how what they see is just the tip of the iceberg.
 
-If Atom is your text editor, type ‘atom .’ into terminal while in the project directory, and it should open up atom with the project directory tree.
+If Atom is your text editor, type `atom .` into terminal while in the project directory, and it should open up atom with the project directory tree.
 
 ###### Files and direcories that aren’t super important now
-*config.ru* - A configuration file that sets up the app.
-*.DS_Store* - Nothing. A system file that Apple often generates.
-*Gemfile* - The Gemfile is where we edit and keep track of the Ruby gems (‘libraries’ or ‘packages’) the application uses.
-*Gemfile.lock* - An auto generated file that the web server uses to determine what gems to use.
-*.gitignore* - This tells git what to ignore. You use this to make sure large image files or things that are unimportant to the app running (like .DS_Store) don’t get tracked and saved.
-*Procfile* - Some configuration settings used by Heroku
-*README.md* - The readme file.
-*.git/ directory* - Things that are used by git to keep track of revisions.
+* `config.ru` - A [configuration file](http://en.wikipedia.org/wiki/Configuration_file) that sets up the app.
+* `.DS_Store` - Nothing. A system file that Apple often generates.
+* `Gemfile` - The Gemfile is where we edit and keep track of the [Ruby gems](http://rubylearning.com/blog/2010/12/14/ruby-gems-%E2%80%94-what-why-and-how/) (‘libraries’ or ‘packages’) the application uses.
+* `Gemfile.lock` - An auto generated file that the web server uses to determine what gems to use.
+* `.gitignore` - This tells git what to ignore. You use this to make sure large image files or things that are unimportant to the app running (like .DS_Store) don’t get tracked and saved.
+* `Procfile` - Some configuration settings used by Heroku
+* `README.md` - The [readme](http://en.wikipedia.org/wiki/README) file.
+* `.git/` directory - Things that are used by git to keep track of revisions.
 
 ###### Where the magic happens
-The guts of this small app lie in weathervane.rb, let’s break down each piece of code in here.
+The guts of this small app lie in `weathervane.rb`, let’s break down each piece of code in here.
 
 This tells the application what other libraries are needed to run this part of the program.
 
@@ -151,22 +155,22 @@ This tells the application to render the index view when a user visits the root 
 
 This block of code stores the time at the server to be used in the index view.
 
-This is where we will send the HTTP GET request using the Arduino. This code takes the parameters sent to the /sensor url (aka the stuff after the ? mark: http://localhost:4567/sensor?temp=100&hum=50) and writes .txt files with those values. The last line is the OK response that gets sent back to the client that sent the request.
+This is where we will send the [HTTP GET](http://www.w3schools.com/tags/ref_httpmethods.asp) request using the Arduino. This code takes the parameters sent to the `/sensor` url (aka the stuff after the ? mark: http://localhost:4567/sensor?temp=100&hum=50) and writes .txt files with those values. The last line is the OK response that gets sent back to the client that sent the request.
 
-These blocks of code read the txt files that are created and makes them a string to be used in the index view.
+These blocks of code read the txt files that are created and makes them a [string](http://en.wikipedia.org/wiki/String_(computer_science)) to be used in the index view.
 
 This block of code creates a status page at (http://localhost:4567/status). When the user visits, it checks to see what txt data files are present. Helpful for troubleshooting issues.
 
 ###### What you actually see
-The code that controls what you actually see when you go to (http://localhost:4567/) is determined by a handful of files in the /public and /views directories.
+The code that controls what you actually see when you go to (http://localhost:4567/) is determined by a handful of files in the `/public` and `/views` directories.
 
-*/public/jquery-2.1.1.min.js* -  We don’t actually change anything here. This is the javascript library that we will call from the index.erb page to dynamically refresh the page with new times, temperatures, and humidity values.
-*/public/style.css* - The CSS file that controls how the elements on the page look. This is how text is blue, fonts are chosen, ect.
-*/views/index.erb* - Finally...this is the file that tells the server what content is displayed when the user visits. erb is embedded ruby. Embedded ruby files allow a combination of basic HTML and Ruby. Useful for when you want some dynamic information to be displayed. Let’s break it down a bit more.
+* `/public/jquery-2.1.1.min.js` -  We don’t actually change anything here. This is the javascript library that we will call from the index.erb page to dynamically refresh the page with new times, temperatures, and humidity values.
+* `/public/style.css` - The [CSS](http://en.wikipedia.org/wiki/Cascading_Style_Sheets) file that controls how the elements on the page look. This is how text is blue, fonts are chosen, ect.
+* `/views/index.erb` - Finally...this is the file that tells the server what content is displayed when the user visits. erb is embedded ruby. Embedded ruby files allow a combination of basic HTML and Ruby. Useful for when you want some dynamic information to be displayed. Let’s break it down a bit more.
 
 This tells the web browser that it is looking at HTML and starts the document.
 
-The head section is where you tell the browser about important things like the location of the CSS files, javascript files (some people like to put those at the bottom of the page), and other metadata like page title.
+The [head section](http://www.w3schools.com/html/html_head.asp) is where you tell the browser about important things like the location of the CSS files, javascript files (some people like to put those at the bottom of the page), and other metadata like page title.
 
 This is the start of the body. We have a header (Hi there!), and then we break each reading we take into their own distinct divs with classes, ids, and placeholder content.  
 
@@ -174,27 +178,30 @@ We use those divs, classes and ids for both styling reasons, and for replacing t
 
 This is the bottom of the body, where we declare a short javascript function that checks the values at an interval of 5000 milliseconds and loads them into the page at the declared ids.
 
-Note that the ids line up with the ids used earlier in the erb file, and the urls they check line up with what was written in weathervane.rb
+Note that the ids line up with the ids used earlier in the `.erb` file, and the urls they check line up with what was written in `weathervane.rb`
 
 And there you have it. The entire iceberg.  
 
 ### Testing Manually  
-You don’t have to wait for the arduino to send data to test if the app works. You can send your own GET requests to the /sensor/ endpoint through a browser. Try it:
+You don’t have to wait for the arduino to send data to test if the app works. You can send your own GET requests to the `/sensor/` endpoint through a browser. Try it:
 http://localhost:4567/sensor?temp=10000&hum=1
 
 Then go to:
 http://localhost:4567/
 
+Wait a bit and you should see the parameters that you sent over.
+
 ### Deploy to Heroku
-It’s more fun to have this app hosted somewhere besides localhost so kids can check it from anywhere, at anytime. For this, we will use Heroku.
+It’s more fun to have this app hosted somewhere besides `localhost` so kids can check it from anywhere, at anytime. For this, we will use [Heroku](https://www.heroku.com/).
 
-Sign up for their free service, and then go through all the setup steps. Their documentation should get you through the process. Once you get to the “deploy an app” step, pull up the Ruby documentation.  Because you cloned our app, you have everything you need to deploy. You just need to type a few commands.
+Sign up for their free service, and then go through all the setup steps. Their [quick start documentation](https://devcenter.heroku.com/articles/quickstart) should get you through the process. Once you get to the “deploy an app” step, pull up their [Ruby documentation](https://devcenter.heroku.com/articles/getting-started-with-ruby).  
+Because you cloned our app, you have everything you need to deploy. You just need to type a few commands.
 
-cd into the project directory and enter: heroku create  
+`cd` into the project directory and enter: `heroku create`  
 
-This creates an empty app on heroku. Then enter: git push heroku master
+This creates an empty app on heroku. Then enter: `git push heroku master`
 
-This pushes the master git branch to the heroku app you created. All that code is now up on a remote heroku server! Now just enter: heroku open  
+This pushes the [master git branch](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging) to the heroku app you created. All that code is now up on a remote heroku server! Now just enter: `heroku open`  
 
 And boom goes the dynamite. You have a live web application.
 
@@ -203,9 +210,9 @@ Test it out by manually inputting a few values like you did earlier. It should w
 ### Recap
 1. We cloned an open sourced web application written in Ruby using the git version control system. We then deployed it to a remote web server we created on heroku.
 
-2. The app works by receiving an HTTP GET request from a client. In this case, the browser. Soon it will be the arduino. The app then parses the parameters (?temp=1&hum=2) of that GET request and creates a couple txt files to store that data.
+2. The app works by receiving an HTTP GET request from a client. In this case, the browser. Soon it will be the arduino. The app then parses the parameters (`?temp=1&hum=2`) of that GET request and creates a couple txt files to store that data.
 
-3. When the user visits the root directory of the application, the server returns the .erb file that contains the HTML code used that tells the browser how to display the data to the user. That HTML file also uses some CSS to style the page, and some javascript to dynamically load the new data on the page.
+3. When the user visits the root directory of the application, the server returns the `.erb` file that contains the HTML code used that tells the browser how to display the data to the user. That HTML file also uses some CSS to style the page, and some javascript to dynamically load the new data on the page.
 
 The Monitor
 ------
@@ -213,12 +220,13 @@ The Monitor
 ### Getting Started
 Now it is time to build the circuit that will read the temperature and humidity, connect to a wifi network, and send the GET request to our web application.
 
-If you haven’t yet, install the Arduino IDE software, and get familiar with it and sketches using their getting started documentation, their libraries explanation, and a few of their examples.
+If you haven’t yet, install the [Arduino IDE software](http://arduino.cc/en/Main/Software), and get familiar with it and sketches using their [getting started documentation](http://arduino.cc/en/Guide/HomePage), their [libraries explanation](http://arduino.cc/en/Guide/Libraries), and a few of their [examples](http://arduino.cc/en/Tutorial/HomePage).
 
 It might be good to have students do a few of those examples so they understand some circuit and EE basics before jumping into this part of the project.  
 
 ### Prep the Wifi Shield and Sensor
-You will need to do a little bit of assembly using a soldering iron on two pieces of the circuit so they can work on the breadboard. The CC3000 Wifi Shield and the SHT-10 Temp/Humidity sensor. There are a lot of videos out there on YouTube that cover soldering, including this one from Adafruit, so go ahead and give it a bit of practice.  
+You will need to do a little bit of assembly using a soldering iron on two pieces of the circuit so they can work on the breadboard. The [CC3000 Wifi Shield](http://www.adafruit.com/product/1469) and the [SHT-10 Temp/Humidity sensor](http://www.adafruit.com/product/1298).
+There are a lot of videos out there on YouTube that cover soldering, including [this one from Adafruit](https://www.youtube.com/watch?v=QKbJxytERvg), so go ahead and give it a bit of practice.  
 
 You will also need to download their respective Arduino libraries and install them on your computer so we can use them in the sketch.
 
@@ -329,6 +337,10 @@ There are lots of areas for improvement. This is why everything is up online in 
   * Fixing typos and bad images (I haven’t proofread anything yet…)
   * Other improvements for clarity
   * Troubleshooting tips
+  * Lesson Questions
+  * Calling out similarities in Ruby and C
+  * Better connecting the composting problem to future improvement ideas   
+
 * Lesson Plan
   * Fixing typos and bad images (I haven’t proofread anything yet…)
   * Other improvements for clarity
