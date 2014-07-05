@@ -1,8 +1,6 @@
 Composting Monitor Lesson Kit Instructions
 ======
 
-<img src="https://jdsimms.com.s3.amazonaws.com/compost/header01.JPG" width=300>
-
 1. Overview
   1. What We're Doing  
   2. Materials List
@@ -29,9 +27,13 @@ Overview
 ------
 
 ### What We’re Doing
+
 This project is aimed towards middle-school and high-school STEM educators who would like to do a project that combines lessons in ecology and sustainability with computer science and web development.  
 
 In this project, I have provided an overview on composting, and instructions for how to build a monitoring device and a web applicaiton.  
+
+[Photo of an example monitor device](http://jdsimms.com.s3.amazonaws.com/compost/header01.JPG)
+[Photo of an example web application](http://jdsimms.com.s3.amazonaws.com/compost/header02.PNG)
 
 Students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to the web application that displays a webpage  students can visit from their phone or computer.
 
@@ -97,7 +99,7 @@ Terminal will start to download everything you need and print the progress. If a
 
 Once the correct ruby version is installed, `cd` to the folder that will encase all of the projects. [This is a good article](http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/) for a quick lesson on `cd` and `ls`, two handy terminal commands.
 
-For example you might have one folder called “projects” that encases each individual’s project, like so:
+For example you might have one folder called “projects” that encases each individual’s project, [like so](http://jdsimms.com.s3.amazonaws.com/compost/webapp03.png).
 
 Now it is time to clone the project from Github.
 
@@ -112,7 +114,7 @@ Copy the SSH Clone path: `git@github.com:jsimms/weathervane.git`
 Double check that you are still in your projects folder on the command line, and enter:
 `git clone git@github.com:jsimms/weathervane.git`
 
-This clones the project into the directory:
+[This clones the project into the directory](http://jdsimms.com.s3.amazonaws.com/compost/webapp06.png)
 
 Change the name of the folder to whatever you want, but do change it to save some confustion. You could copy and paste that for each kid, but I think it is better to have the kids do a little typing on the command line so they can understand there’s more than one way to operate the computer.
 
@@ -133,7 +135,7 @@ This should print out a response that let’s you know Sintra is up and running 
 [2014-07-05 12:21:52] INFO  WEBrick::HTTPServer#start: pid=10979 port=4567
 ````
 
-So, go there in your browser, and you should see something like this:
+So, go there in your browser, and [you should see something like this](http://jdsimms.com.s3.amazonaws.com/compost/webapp08.png)
 
 If you don’t, check a few things:
 
@@ -144,7 +146,7 @@ If you don’t, check a few things:
 ### The Code  
 Even though ‘it just works,’ this is a lesson, so let’s do a quick breakdown of how the app works so kids can have a basic understanding of how what they see is just the tip of the iceberg.
 
-If Atom is your text editor, type `atom .` into terminal while in the project directory, and it should open up atom with the project directory tree.
+If Atom is your text editor, type `atom .` into terminal while in the project directory, and it [should open up atom with the whole project directory tree](http://jdsimms.com.s3.amazonaws.com/compost/webapp09.png).
 
 ###### Files and direcories that aren’t super important now
 * `config.ru` - A [configuration file](http://en.wikipedia.org/wiki/Configuration_file) that sets up the app.
@@ -308,13 +310,17 @@ Note that the ids line up with the ids used earlier in the `.erb` file, and the 
 And there you have it. The entire iceberg.  
 
 ### Testing Manually  
-You don’t have to wait for the arduino to send data to test if the app works. You can send your own GET requests to the `/sensor/` endpoint through a browser. Try it:
+You don’t have to wait for the arduino to send data to test if the app works. You can send your own GET requests to the `/sensor/` endpoint through a browser. Try it.
+
+Enter this into your browser:
 http://localhost:4567/sensor?temp=10000&hum=1
+
+And you should see a [confirmation message](http://jdsimms.com.s3.amazonaws.com/compost/webapp21.png) that the request was received.
 
 Then go to:
 http://localhost:4567/
 
-Wait a bit and you should see the parameters that you sent over.
+Wait a bit and you should [see the page load the parameters](http://jdsimms.com.s3.amazonaws.com/compost/webapp22.png) that you sent over.
 
 ### Deploy to Heroku
 It’s more fun to have this app hosted somewhere besides `localhost` so kids can check it from anywhere, at anytime. For this, we will use [Heroku](https://www.heroku.com/).
@@ -328,7 +334,7 @@ This creates an empty app on heroku. Then enter: `git push heroku master`
 
 This pushes the [master git branch](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging) to the heroku app you created. All that code is now up on a remote heroku server! Now just enter: `heroku open`  
 
-And boom goes the dynamite. You have a live web application.
+And boom goes the dynamite. [You should have a live web application](http://jdsimms.com.s3.amazonaws.com/compost/webapp25.png).
 
 Test it out by manually inputting a few values like you did earlier. It should work just like it did on localhost - it’s just a different url.
 
@@ -353,6 +359,8 @@ It might be good to have students do a few of those examples so they understand 
 You will need to do a little bit of assembly using a soldering iron on two pieces of the circuit so they can work on the breadboard. The [CC3000 Wifi Shield](http://www.adafruit.com/product/1469) and the [SHT-10 Temp/Humidity sensor](http://www.adafruit.com/product/1298).
 There are a lot of videos out there on YouTube that cover soldering, including [this one from Adafruit](https://www.youtube.com/watch?v=QKbJxytERvg), so go ahead and give it a bit of practice.  
 
+Ultimately, you just want those pins soldered on their so [they are ready to go](http://jdsimms.com.s3.amazonaws.com/compost/arduino01.JPG) into the breadboard.
+
 You will also need to download their respective Arduino libraries and install them on your computer so we can use them in the sketch.
 
 SHT-10: https://github.com/practicalarduino/SHT1x
@@ -361,17 +369,17 @@ CC3000: https://learn.adafruit.com/adafruit-cc3000-wifi/cc3000-library-software
 ### Wire the Circuit
 Time to wire things up. Let’s bust out the breadboard and get started. The pins I used below are the default setup in the sketch I provide, but you can change it up, as long as you change it in the sketch.
 
-First, wire over 5V power and GND from the Arduino over to the breadboard:
+First, [wire over 5V power and GND from the Arduino over to the breadboard](http://jdsimms.com.s3.amazonaws.com/compost/arduino02.JPG).
 
-Plug in the CC3000 and the SHT-10 Sensor:  
+Then, [plug in the CC3000 and the SHT-10 Sensor](http://jdsimms.com.s3.amazonaws.com/compost/arduino03.JPG).  
 
-Wire up the SHT-10:
+[Wire up the SHT-10](http://jdsimms.com.s3.amazonaws.com/compost/arduino04.JPG).
 * Ground (Black or Green) =  GND Source
 * Data (Blue) = 6
 * Clock (Yellow) = 7
 * Power (Red) =  Power Source
 
-Wire up the CC3000 to complete the circuit, and the rats nest of wires:
+[Wire up the CC3000 to complete the circuit, and the rats nest of wires](http://jdsimms.com.s3.amazonaws.com/compost/arduino05.JPG).
 * GND = GND Source
 * IRQ = 3
 * VBAT = 5
