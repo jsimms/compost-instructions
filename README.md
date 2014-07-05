@@ -32,8 +32,9 @@ This project is aimed towards middle-school and high-school STEM educators who w
 
 In this project, I have provided an overview on composting, and instructions for how to build a monitoring device and a web applicaiton.  
 
-[Photo of an example monitor device](http://jdsimms.com.s3.amazonaws.com/compost/header01.JPG)
-[Photo of an example web application](http://jdsimms.com.s3.amazonaws.com/compost/header02.PNG)
+Here is a [photo of an example the monitor device](http://jdsimms.com.s3.amazonaws.com/compost/header01.JPG).
+
+Here is a [photo of an example of the web application](http://jdsimms.com.s3.amazonaws.com/compost/header02.PNG).
 
 Students will read the temperature and moisture level of a compost pile using a wifi-connected sensor and send the sensor data to the web application that displays a webpage  students can visit from their phone or computer.
 
